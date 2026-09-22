@@ -1,0 +1,65 @@
+package com.cooperativa.voto.api.controller;
+
+import com.cooperativa.voto.api.controller.dto.CriarPautaRequestDTO;
+import com.cooperativa.voto.api.domain.service.PautaService;
+import com.cooperativa.voto.api.infrastructure.repository.PautaRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
+public class PautaControllerIntegrationTest {
+    @Autowired
+    private MockMvc mockMvc;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @Autowired
+    private PautaRepository pautaRepository;
+
+    @BeforeEach
+    void setUp() {
+        pautaRepository.deleteAll();
+    }
+
+    @Test
+    @DisplayName("Fluxo completo: Persistir pauta no banco e consultar via endpoint REST")
+    void deveCriarEBuscarPautaNoBancoDeDados() throws Exception {
+        var request = new CriarPautaRequestDTO("Pauta de Integração", "Descrição da pauta");
+
+        String responseJson = mockMvc.perform(post("/v1/pautas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.titulo").value("Pauta de Integração"))
+                .andReturn().getResponse().getContentAsString();
+
+        assertEquals(1, pautaRepository.count());
+
+        Long pautaIdGerada = objectMapper.readTree(responseJson).get("id").asLong();
+
+        mockMvc.perform(get("/v1/pautas/" + pautaIdGerada))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(pautaIdGerada))
+                .andExpect(jsonPath("$.titulo").value("Pauta de Integração"));
+    }
+}
