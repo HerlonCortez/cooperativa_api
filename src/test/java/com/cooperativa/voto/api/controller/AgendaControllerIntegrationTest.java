@@ -1,8 +1,8 @@
 package com.cooperativa.voto.api.controller;
 
-import com.cooperativa.voto.api.controller.dto.CriarPautaRequestDTO;
-import com.cooperativa.voto.api.domain.service.PautaService;
-import com.cooperativa.voto.api.infrastructure.repository.PautaRepository;
+import com.cooperativa.voto.api.controller.dto.CreateAgendaRequestDTO;
+import com.cooperativa.voto.api.infrastructure.repository.AgendaRepository;
+import com.cooperativa.voto.api.infrastructure.repository.VotingSessionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,8 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -24,25 +24,29 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 @ActiveProfiles("test")
-public class PautaControllerIntegrationTest {
+public class AgendaControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
-    private PautaRepository pautaRepository;
+    private AgendaRepository agendaRepository;
+    @Autowired
+    private VotingSessionRepository votingSessionRepository;
 
     @BeforeEach
     void setUp() {
-        pautaRepository.deleteAll();
+        votingSessionRepository.deleteAll();
+        agendaRepository.deleteAll();
     }
 
     @Test
     @DisplayName("Fluxo completo: Persistir pauta no banco e consultar via endpoint REST")
     void deveCriarEBuscarPautaNoBancoDeDados() throws Exception {
-        var request = new CriarPautaRequestDTO("Pauta de Integração", "Descrição da pauta");
+        var request = new CreateAgendaRequestDTO("Pauta de Integração", "Descrição da pauta");
 
         String responseJson = mockMvc.perform(post("/v1/pautas")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -53,7 +57,7 @@ public class PautaControllerIntegrationTest {
                 .andExpect(jsonPath("$.titulo").value("Pauta de Integração"))
                 .andReturn().getResponse().getContentAsString();
 
-        assertEquals(1, pautaRepository.count());
+        assertEquals(1, agendaRepository.count());
 
         Long pautaIdGerada = objectMapper.readTree(responseJson).get("id").asLong();
 
