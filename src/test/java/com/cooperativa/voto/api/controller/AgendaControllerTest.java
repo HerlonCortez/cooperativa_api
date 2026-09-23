@@ -2,7 +2,7 @@ package com.cooperativa.voto.api.controller;
 
 import com.cooperativa.voto.api.controller.dto.CreateAgendaRequestDTO;
 import com.cooperativa.voto.api.domain.entity.Pauta;
-import com.cooperativa.voto.api.domain.service.AgendaService;
+import com.cooperativa.voto.api.domain.service.impl.AgendaServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +26,7 @@ public class AgendaControllerTest {
     private AgendaController agendaController;
 
     @Mock
-    private AgendaService agendaService;
+    private AgendaServiceImpl agendaServiceImpl;
 
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
@@ -48,7 +48,7 @@ public class AgendaControllerTest {
                 .descricao("Descrição da pauta")
                 .build();
 
-        when(agendaService.createAgenda("Nova Pauta", "Descrição da pauta")).thenReturn(pautaSlava);
+        when(agendaServiceImpl.createAgenda("Nova Pauta", "Descrição da pauta")).thenReturn(pautaSlava);
 
         mockMvc.perform(post("/v1/pautas")
                 .contentType(MediaType.APPLICATION_JSON)

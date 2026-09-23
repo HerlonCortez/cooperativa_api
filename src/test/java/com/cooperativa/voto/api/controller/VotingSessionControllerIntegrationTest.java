@@ -3,6 +3,7 @@ package com.cooperativa.voto.api.controller;
 import com.cooperativa.voto.api.controller.dto.CreateAgendaRequestDTO;
 import com.cooperativa.voto.api.controller.dto.OpenSessionRequestDTO;
 import com.cooperativa.voto.api.infrastructure.repository.AgendaRepository;
+import com.cooperativa.voto.api.infrastructure.repository.VoteRepository;
 import com.cooperativa.voto.api.infrastructure.repository.VotingSessionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
@@ -29,7 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @ActiveProfiles("test")
 public class VotingSessionControllerIntegrationTest {
-    private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     AgendaRepository agendaRepository;
     @Autowired
@@ -37,10 +37,15 @@ public class VotingSessionControllerIntegrationTest {
     @Autowired
     private VotingSessionRepository votingSessionRepository;
     @Autowired
+    private VoteRepository voteRepository;
+    @Autowired
     private EntityManager entityManager;
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     @BeforeEach
-    public void setUp() {
+    void setUp() {
+        voteRepository.deleteAll();
         votingSessionRepository.deleteAll();
         agendaRepository.deleteAll();
     }
