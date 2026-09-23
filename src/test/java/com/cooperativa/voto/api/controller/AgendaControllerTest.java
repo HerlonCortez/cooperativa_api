@@ -1,8 +1,8 @@
 package com.cooperativa.voto.api.controller;
 
-import com.cooperativa.voto.api.controller.dto.CriarPautaRequestDTO;
+import com.cooperativa.voto.api.controller.dto.CreateAgendaRequestDTO;
 import com.cooperativa.voto.api.domain.entity.Pauta;
-import com.cooperativa.voto.api.domain.service.PautaService;
+import com.cooperativa.voto.api.domain.service.AgendaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,26 +21,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-public class PautaControllerTest {
+public class AgendaControllerTest {
     @InjectMocks
-    private PautaController pautaController;
+    private AgendaController agendaController;
 
     @Mock
-    private PautaService pautaService;
+    private AgendaService agendaService;
 
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(pautaController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(agendaController).build();
         objectMapper = new ObjectMapper();
     }
 
     @Test
     @DisplayName("Deve criar pauta com sucesso")
     public void deveCriarPauta() throws Exception {
-        var request = new CriarPautaRequestDTO("Nova Pauta", "Descrição da pauta");
+        var request = new CreateAgendaRequestDTO("Nova Pauta", "Descrição da pauta");
         var pautaSlava = Pauta.
                 builder()
                 .id(1L)
@@ -48,7 +48,7 @@ public class PautaControllerTest {
                 .descricao("Descrição da pauta")
                 .build();
 
-        when(pautaService.criarPauta("Nova Pauta", "Descrição da pauta")).thenReturn(pautaSlava);
+        when(agendaService.createAgenda("Nova Pauta", "Descrição da pauta")).thenReturn(pautaSlava);
 
         mockMvc.perform(post("/v1/pautas")
                 .contentType(MediaType.APPLICATION_JSON)
