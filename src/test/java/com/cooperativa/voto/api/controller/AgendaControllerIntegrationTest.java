@@ -2,6 +2,7 @@ package com.cooperativa.voto.api.controller;
 
 import com.cooperativa.voto.api.controller.dto.CreateAgendaRequestDTO;
 import com.cooperativa.voto.api.infrastructure.repository.AgendaRepository;
+import com.cooperativa.voto.api.infrastructure.repository.VoteRepository;
 import com.cooperativa.voto.api.infrastructure.repository.VotingSessionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,9 +37,12 @@ public class AgendaControllerIntegrationTest {
     private AgendaRepository agendaRepository;
     @Autowired
     private VotingSessionRepository votingSessionRepository;
+    @Autowired
+    private VoteRepository voteRepository;
 
     @BeforeEach
     void setUp() {
+        voteRepository.deleteAll();
         votingSessionRepository.deleteAll();
         agendaRepository.deleteAll();
     }

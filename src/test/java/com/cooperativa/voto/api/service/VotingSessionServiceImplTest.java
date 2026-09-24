@@ -3,8 +3,8 @@ package com.cooperativa.voto.api.service;
 import com.cooperativa.voto.api.domain.entity.Pauta;
 import com.cooperativa.voto.api.domain.entity.SessaoVotacao;
 import com.cooperativa.voto.api.domain.exception.RegraNegocioException;
-import com.cooperativa.voto.api.domain.service.AgendaService;
-import com.cooperativa.voto.api.domain.service.VotingSessionService;
+import com.cooperativa.voto.api.domain.service.impl.AgendaServiceImpl;
+import com.cooperativa.voto.api.domain.service.impl.VotingSessionServiceImpl;
 import com.cooperativa.voto.api.infrastructure.repository.VotingSessionRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,11 +20,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class SessionVotingServiceTest {
+public class VotingSessionServiceImplTest {
     @InjectMocks
-    private VotingSessionService votingSessionService;
+    private VotingSessionServiceImpl votingSessionServiceImpl;
     @Mock
-    private AgendaService agendaService;
+    private AgendaServiceImpl agendaServiceImpl;
     @Mock
     private VotingSessionRepository votingSessionRepository;
 
@@ -46,11 +46,11 @@ public class SessionVotingServiceTest {
                 .dataFechamento(end)
                 .build();
 
-        when(agendaService.getAgendaId(agendaId)).thenReturn(agenda);
+        when(agendaServiceImpl.getAgendaId(agendaId)).thenReturn(agenda);
         when(votingSessionRepository.existsByPautaId(agendaId)).thenReturn(false);
         when(votingSessionRepository.save(any(SessaoVotacao.class))).thenReturn(session);
 
-        SessaoVotacao result = votingSessionService.openSession(agendaId,null);
+        SessaoVotacao result = votingSessionServiceImpl.openSession(agendaId,null);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
@@ -77,11 +77,11 @@ public class SessionVotingServiceTest {
                 .dataFechamento(end)
                 .build();
 
-        when(agendaService.getAgendaId(agendaId)).thenReturn(agenda);
+        when(agendaServiceImpl.getAgendaId(agendaId)).thenReturn(agenda);
         when(votingSessionRepository.existsByPautaId(agendaId)).thenReturn(false);
         when(votingSessionRepository.save(any(SessaoVotacao.class))).thenReturn(session);
 
-        SessaoVotacao result = votingSessionService.openSession(agendaId,3);
+        SessaoVotacao result = votingSessionServiceImpl.openSession(agendaId,3);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
@@ -99,11 +99,11 @@ public class SessionVotingServiceTest {
                 .titulo("Pauta")
                 .build();
 
-        when(agendaService.getAgendaId(agendaId)).thenReturn(agenda);
+        when(agendaServiceImpl.getAgendaId(agendaId)).thenReturn(agenda);
         when(votingSessionRepository.existsByPautaId(agendaId)).thenReturn(true);
 
        RegraNegocioException exception = assertThrows(RegraNegocioException.class,
-               () -> votingSessionService.openSession(agendaId,2));
+               () -> votingSessionServiceImpl.openSession(agendaId,2));
 
        assertTrue(exception.getMessage().contains("Já existe uma sessão de votação criada para esta pauta."));
        verify(votingSessionRepository, never()).save(any(SessaoVotacao.class));

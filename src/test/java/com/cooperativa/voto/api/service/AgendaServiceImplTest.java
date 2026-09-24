@@ -2,7 +2,7 @@ package com.cooperativa.voto.api.service;
 
 import com.cooperativa.voto.api.domain.entity.Pauta;
 import com.cooperativa.voto.api.domain.exception.RecursoNaoEncontradoException;
-import com.cooperativa.voto.api.domain.service.AgendaService;
+import com.cooperativa.voto.api.domain.service.impl.AgendaServiceImpl;
 import com.cooperativa.voto.api.infrastructure.repository.AgendaRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,9 +18,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class AgendaServiceTest {
+public class AgendaServiceImplTest {
     @InjectMocks
-    private AgendaService agendaService;
+    private AgendaServiceImpl agendaServiceImpl;
     @Mock
     private AgendaRepository agendaRepository;
 
@@ -38,7 +38,7 @@ public class AgendaServiceTest {
 
         when(agendaRepository.save(any(Pauta.class))).thenReturn(pautaSalva);
 
-        Pauta resultado = agendaService.createAgenda(title, description);
+        Pauta resultado = agendaServiceImpl.createAgenda(title, description);
 
         assertNotNull(resultado);
         assertEquals(1L, resultado.getId());
@@ -55,7 +55,7 @@ public class AgendaServiceTest {
 
         when(agendaRepository.findById(pautaId)).thenReturn(Optional.of(pauta));
 
-        Pauta resultado = agendaService.getAgendaId(pautaId);
+        Pauta resultado = agendaServiceImpl.getAgendaId(pautaId);
 
         assertNotNull(resultado);
         assertEquals(pautaId, resultado.getId());
@@ -70,7 +70,7 @@ public class AgendaServiceTest {
 
         RecursoNaoEncontradoException exception = assertThrows(
                 RecursoNaoEncontradoException.class,
-                () -> agendaService.getAgendaId(pautaId)
+                () -> agendaServiceImpl.getAgendaId(pautaId)
         );
 
         assertTrue(exception.getMessage().contains("Pauta não encontrada com ID: " + pautaId));

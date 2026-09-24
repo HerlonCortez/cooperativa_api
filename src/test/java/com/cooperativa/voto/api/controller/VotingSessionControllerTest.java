@@ -3,7 +3,7 @@ package com.cooperativa.voto.api.controller;
 import com.cooperativa.voto.api.controller.dto.OpenSessionRequestDTO;
 import com.cooperativa.voto.api.domain.entity.Pauta;
 import com.cooperativa.voto.api.domain.entity.SessaoVotacao;
-import com.cooperativa.voto.api.domain.service.VotingSessionService;
+import com.cooperativa.voto.api.domain.service.impl.VotingSessionServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +31,7 @@ public class VotingSessionControllerTest {
     private VotingSessionController votingSessionController;
 
     @Mock
-    private VotingSessionService votingSessionService;
+    private VotingSessionServiceImpl votingSessionServiceImpl;
 
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
@@ -67,7 +67,7 @@ public class VotingSessionControllerTest {
                 .dataFechamento(end)
                 .build();
 
-        when(votingSessionService.openSession(eq(agendaId), eq(timeMinutes))).thenReturn(sessaoMock);
+        when(votingSessionServiceImpl.openSession(eq(agendaId), eq(timeMinutes))).thenReturn(sessaoMock);
 
         mockMvc.perform(post("/v1/sessoes/abrir")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -77,7 +77,7 @@ public class VotingSessionControllerTest {
                 .andExpect(jsonPath("$.agendaId").value(agendaId))
                 .andExpect(jsonPath("$.open").value(true));
 
-        verify(votingSessionService, times(1)).openSession(agendaId, timeMinutes);
+        verify(votingSessionServiceImpl, times(1)).openSession(agendaId, timeMinutes);
     }
 
     @Test
@@ -90,13 +90,12 @@ public class VotingSessionControllerTest {
                         .content(objectMapper.writeValueAsString(requestInvalid)))
                 .andExpect(status().isBadRequest());
 
-        verify(votingSessionService, never()).openSession(any(), any());
+        verify(votingSessionServiceImpl, never()).openSession(any(), any());
     }
 
     @Test
     @DisplayName("Deve retornar Status 200 (OK) ao buscar sessão existente por ID da pauta")
     void deveBuscarSessaoPorPautaId() throws Exception {
-        // Arrange
         Long agendaId = 1L;
         LocalDateTime inicio = LocalDateTime.now();
         LocalDateTime fim = inicio.plusMinutes(10);
@@ -108,15 +107,14 @@ public class VotingSessionControllerTest {
                 .dataFechamento(fim)
                 .build();
 
-        when(votingSessionService.getAgendaId(agendaId)).thenReturn(sessionMock);
+        when(votingSessionServiceImpl.getAgendaId(agendaId)).thenReturn(sessionMock);
 
-        // Act & Assert
         mockMvc.perform(get("/v1/sessoes/pauta/{pautaId}", agendaId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(10))
                 .andExpect(jsonPath("$.agendaId").value(agendaId))
                 .andExpect(jsonPath("$.open").value(true));
 
-        verify(votingSessionService, times(1)).getAgendaId(agendaId);
+        verify(votingSessionServiceImpl, times(1)).getAgendaId(agendaId);
     }
 }

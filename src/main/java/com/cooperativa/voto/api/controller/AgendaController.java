@@ -2,7 +2,7 @@ package com.cooperativa.voto.api.controller;
 
 import com.cooperativa.voto.api.controller.dto.CreateAgendaRequestDTO;
 import com.cooperativa.voto.api.domain.entity.Pauta;
-import com.cooperativa.voto.api.domain.service.AgendaService;
+import com.cooperativa.voto.api.domain.service.impl.AgendaServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AgendaController {
 
-    private final AgendaService agendaService;
+    private final AgendaServiceImpl agendaServiceImpl;
 
     @PostMapping
     public ResponseEntity<Pauta> createAgenda(@RequestBody @Valid CreateAgendaRequestDTO request) {
-        var pauta = agendaService.createAgenda(request.title(), request.description());
+        var pauta = agendaServiceImpl.createAgenda(request.title(), request.description());
         return ResponseEntity.status(HttpStatus.CREATED).body(pauta);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Pauta> getAgendaId(@PathVariable Long id) {
-        return ResponseEntity.ok(agendaService.getAgendaId(id));
+        return ResponseEntity.ok(agendaServiceImpl.getAgendaId(id));
     }
 }

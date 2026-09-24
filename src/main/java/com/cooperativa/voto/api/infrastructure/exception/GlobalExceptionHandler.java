@@ -2,6 +2,8 @@ package com.cooperativa.voto.api.infrastructure.exception;
 
 import com.cooperativa.voto.api.domain.exception.RecursoNaoEncontradoException;
 import com.cooperativa.voto.api.domain.exception.RegraNegocioException;
+import com.cooperativa.voto.api.infrastructure.client.exception.AssociadoNaoAutorizadoException;
+import com.cooperativa.voto.api.infrastructure.client.exception.CpfInvalidoException;
 import com.cooperativa.voto.api.infrastructure.exception.dto.ErrorResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,29 @@ public class GlobalExceptionHandler {
         var errorResponse = new ErrorResponseDTO(
                 HttpStatus.BAD_REQUEST.value(),
                 "BAD_REQUEST",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(AssociadoNaoAutorizadoException.class)
+    public ResponseEntity<ErrorResponseDTO> handleAssociadoNaoAutorizado(AssociadoNaoAutorizadoException ex) {
+        var errorResponse = new ErrorResponseDTO(
+                HttpStatus.FORBIDDEN.value(),
+                "FORBIDDEN",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+    }
+
+    @ExceptionHandler(CpfInvalidoException.class)
+    public ResponseEntity<ErrorResponseDTO> handleCpfInvalido(CpfInvalidoException ex) {
+        var errorResponse = new ErrorResponseDTO(
+                HttpStatus.NOT_FOUND.value(),
+                "NOT_FOUND",
                 ex.getMessage(),
                 LocalDateTime.now()
         );
