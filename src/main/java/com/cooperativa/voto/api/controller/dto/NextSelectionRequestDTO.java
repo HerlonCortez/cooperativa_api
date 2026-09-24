@@ -5,18 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record RecordVoteRequestDTO(
-        @JsonProperty("agendaId")
+public record NextSelectionRequestDTO(
         @NotNull(message = "O ID da pauta é obrigatório")
         Long agendaId,
 
         @JsonProperty("textFieldId")
         @NotBlank(message = "O CPF do associado é obrigatório")
-        String textFieldId,
+        String textFieldId
 
-        @JsonProperty("vote")
-        @NotNull(message = "A opção de voto é obrigatória")
-        OptionVoteEnum vote
 ) {
     public String getCpf() {
         return textFieldId;
