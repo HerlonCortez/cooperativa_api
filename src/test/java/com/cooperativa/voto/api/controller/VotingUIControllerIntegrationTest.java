@@ -23,13 +23,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(VotingUIController.class)
 @TestPropertySource(properties = "app.sdui.base-url=http://localhost:8080")
-class VotingUIControllerIT {
+class VotingUIControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @MockitoBean
     private AgendaService agendaService;
@@ -77,11 +76,11 @@ class VotingUIControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.title").value("Escolha se votoAprovação de Orçamento"))
-                .andExpect(jsonPath("$.options", hasSize(3)))
-                .andExpect(jsonPath("$.options[0].title").value("Votar SIM"))
-                .andExpect(jsonPath("$.options[0].body.vote").value("SIM"))
-                .andExpect(jsonPath("$.options[1].title").value("Votar Não"))
-                .andExpect(jsonPath("$.options[1].body.vote").value("NAO"));
+                .andExpect(jsonPath("$.itens", hasSize(3)))
+                .andExpect(jsonPath("$.itens[0].text").value("Votar SIM"))
+                .andExpect(jsonPath("$.itens[0].body.vote").value("SIM"))
+                .andExpect(jsonPath("$.itens[1].text").value("Votar Não"))
+                .andExpect(jsonPath("$.itens[1].body.vote").value("NAO"));
     }
 
     @Test
