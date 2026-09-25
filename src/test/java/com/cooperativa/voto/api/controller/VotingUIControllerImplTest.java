@@ -22,15 +22,13 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class VotingUIControllerImplTest {
-
+    @InjectMocks
+    private VotingUIControllerImpl votingUIControllerImpl;
     @Mock
     private AgendaService agendaService;
 
     @Mock
     private CpfValidationService cpfValidationService;
-
-    @InjectMocks
-    private VotingUIControllerImpl votingUIControllerImpl;
 
     private final String BASE_URL = "http://localhost:8080";
 

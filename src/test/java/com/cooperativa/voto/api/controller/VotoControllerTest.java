@@ -35,16 +35,12 @@ public class VotoControllerTest {
     @Mock
     private VoteRepository voteRepository;
 
-    @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(voteControllerImpl).build();
-        objectMapper = new ObjectMapper();
+       mockMvc = MockMvcBuilders.standaloneSetup(voteControllerImpl).build();
     }
 
     @Test
