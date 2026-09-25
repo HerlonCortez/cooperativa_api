@@ -46,6 +46,38 @@ Pré-requisitos
 Docker e Docker Compose instalados.
 
 Passos para execução
-Clone o repositório:
 
+1 - Clone o repositório:
 
+git clone git@github.com:HerlonCortez/cooperativa_api.git
+
+2 - Suba o ambiente (Aplicação + PostgreSQL) via Docker Compose:
+
+docker-compose up -d --build
+
+A API estará disponível em http://localhost:8080.
+
+Testes e Qualidade de Código
+
+1. Testes Unitários e de Integração
+
+Para rodar a suíte de testes automatizados (MockK/Mockito, JUnit):
+
+./mvnw clean test
+
+2. Testes de Performance com Apache JMeter (Tarefa Bônus 2)
+Para garantir resiliência e alta vazão do sistema sob concorrência intensa na escrita de votos, realizamos simulações de carga com o Apache JMeter.
+
+Cenário do Teste Executado:
+- Volume de Requisições: 1.000 requisições simultâneas submetendo votos em paralelo.
+- Endpoint Testado: POST /v1/votos
+- Geração de Dados: Uso de funções estocásticas do JMeter (${__Random}) para simulação de múltiplos CPFs únicos por requisição.
+
+Como Executar o Teste de Carga e Gerar o Relatório HTML
+Execute o script de estresse armazenado na pasta do projeto através do modo Non-GUI do JMeter:
+
+2.1 Limpa resultados de testes anteriores
+rm -rf performance-tests/resultado.jtl performance-tests/relatorio-html
+
+2.2 Executa o teste de estresse e gera o relatório completo em HTML
+./apache-jmeter-5.6.3/bin/jmeter -n -t performance-tests/Teste_votacao.jmx -l performance-tests/resultado.jtl -e -o ./performance-tests/relatorio-html
