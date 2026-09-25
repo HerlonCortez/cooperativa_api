@@ -30,7 +30,7 @@ src/main/java/com/cooperativa/voto/api/
 │
 └── Application                  # Classe principal de inicialização (Spring Boot)
 
-Server-Driven UI (SDUI)
+#**Server-Driven UI (SDUI)**
 
 A interface do usuário é conduzida integralmente pelo backend. O fluxo de navegação do usuário é gerido via transição de contratos entre endpoints:
 
@@ -44,10 +44,10 @@ Como Rodar o Projeto com Docker Compose
 
 O projeto está totalmente containerizado para facilitar a execução local e de testes.
 
-Pré-requisitos
+#**Pré-requisitos**
 Docker e Docker Compose instalados.
 
-Passos para execução
+**Passos para execução**
 
 1 - Clone o repositório:
 
@@ -57,10 +57,10 @@ git clone git@github.com:HerlonCortez/cooperativa_api.git
 
 docker-compose up -d --build
 
-A API estará disponível em http://localhost:8080.
-Swagger em: http://localhost:8080/swagger-ui/index.html
+**A API estará disponível em http://localhost:8080.**
+**Swagger em: http://localhost:8080/swagger-ui/index.html**
 
-Testes e Qualidade de Código
+#**Testes e Qualidade de Código**
 
 1. Testes Unitários e de Integração
 
@@ -76,10 +76,10 @@ Cenário do Teste Executado:
 - Endpoint Testado: POST /v1/votos
 - Geração de Dados: Uso de funções estocásticas do JMeter (${__Random}) para simulação de múltiplos CPFs únicos por requisição.
 
-Como Executar o Teste de Carga e Gerar o Relatório HTML
+#**Como Executar o Teste de Carga e Gerar o Relatório HTML**
 Execute o script de estresse armazenado na pasta do projeto através do JMeter:
 
-OBS: O teste que foi realizado encontra-se na pasta: relatorio-teste-performance na raiz do projeto.
+**OBS: O teste que foi realizado encontra-se na pasta: relatorio-teste-performance na raiz do projeto.**
 
 2.1 Limpa resultados de testes anteriores
 rm -rf performance-tests/resultado.jtl performance-tests/relatorio-html
