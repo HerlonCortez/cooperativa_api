@@ -20,10 +20,10 @@ public class CpfValidationServiceImpl implements CpfValidationService {
     @Override
     public void validateMemberIsEligibleToVote(String cpf) {
         try {
-            log.info("Validando member iseligible to vote");
+            log.info("Iniciando a validação do CPF para um associado");
             CpfValidationResponse validationResponse = userInfoClient.validarCpf(cpf);
 
-            log.info("Validando member iseligible to vote");
+            log.info("Validando se o associado pode votar");
             if (validationResponse == null ||validationResponse.canVote()) {
                 throw new AssociadoNaoAutorizadoException("Associado de CPF " + cpf + " não está autorizado a votar.");
             }

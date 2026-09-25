@@ -19,3 +19,18 @@ app:
   user-info-url: ${USER_INFO_URL:https://user-info.herokuapp.com}
   sdui:
     base-url: ${SDUI_BASE_URL:http://localhost:8080}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operations-sorter: alpha
+    tags-sorter: alpha
+    try-it-out-enabled: true
+    display-request-duration: true
+    doc-expansion: none
+  packages-to-scan: com.cooperativa.voto.api.controller
+  paths-to-match: /v1/**
