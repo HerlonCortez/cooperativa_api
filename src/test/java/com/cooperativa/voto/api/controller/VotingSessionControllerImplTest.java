@@ -34,14 +34,13 @@ public class VotingSessionControllerImplTest {
     private VotingSessionServiceImpl votingSessionServiceImpl;
 
     private MockMvc mockMvc;
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     private Pauta agenda;
 
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(votingSessionControllerImpl).build();
-        objectMapper = new ObjectMapper();
-
         agenda = Pauta.
                 builder()
                 .id(1L)

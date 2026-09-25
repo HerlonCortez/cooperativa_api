@@ -24,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(VotingUIControllerImpl.class)
 @TestPropertySource(properties = "app.sdui.base-url=http://localhost:8080")
 class VotingUIControllerImplIntegrationTest {
-
     @Autowired
     private MockMvc mockMvc;
 
