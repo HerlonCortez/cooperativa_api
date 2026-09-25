@@ -1,9 +1,7 @@
 package com.cooperativa.voto.api.controller;
 
 import com.cooperativa.voto.api.controller.dto.RecordVoteRequestDTO;
-import com.cooperativa.voto.api.controller.dto.ResultVotingResponseDTO;
 import com.cooperativa.voto.api.domain.dto.ResultVotingDTO;
-import com.cooperativa.voto.api.domain.service.VoteService;
 import com.cooperativa.voto.api.domain.service.impl.VoteServiceImpl;
 import com.cooperativa.voto.api.infrastructure.enums.OptionVoteEnum;
 import com.cooperativa.voto.api.infrastructure.repository.VoteRepository;
@@ -30,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 public class VotoControllerTest {
     @InjectMocks
-    private VoteController voteController;
+    private VoteControllerImpl voteControllerImpl;
 
     @Mock
     private VoteServiceImpl voteService;
@@ -45,7 +43,7 @@ public class VotoControllerTest {
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(voteController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(voteControllerImpl).build();
         objectMapper = new ObjectMapper();
     }
 
