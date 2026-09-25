@@ -28,7 +28,7 @@ src/main/java/com/cooperativa/voto/api/
 │   ├── exception/               # Handlers e exceções de infraestrutura
 │   └── repository/              # Interfaces e implementações de persistência (Spring Data JPA)
 │
-└── Application                  # Classe principal de inicialização (Spring Boot)
+└── Application                  # Classe principal de inicialização (Spring Boot)```
 
 #**Server-Driven UI (SDUI)**
 
