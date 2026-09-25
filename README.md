@@ -1,6 +1,8 @@
+# **API Cooperativa**
+
 API de Votação desenvolvida em Java com Spring Boot, projetada sob a arquitetura Server-Driven UI (SDUI) para guiar a navegação e telas de aplicativos móveis em alta escala, alinhada aos princípios da Clean Architecture.
 
-Arquitetura do Projeto (Clean Architecture)
+## **Arquitetura do Projeto (Clean Architecture)**
 
 A aplicação segue a divisão em camadas para isolar regras de negócio das dependências de infraestrutura, frameworks e acesso a dados[cite: 4]:
 
