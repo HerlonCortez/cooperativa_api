@@ -74,7 +74,9 @@ Cenário do Teste Executado:
 - Geração de Dados: Uso de funções estocásticas do JMeter (${__Random}) para simulação de múltiplos CPFs únicos por requisição.
 
 Como Executar o Teste de Carga e Gerar o Relatório HTML
-Execute o script de estresse armazenado na pasta do projeto através do modo Non-GUI do JMeter:
+Execute o script de estresse armazenado na pasta do projeto através do JMeter:
+
+OBS: O teste que foi realizado encontra-se na pasta: relatorio-teste-performance na raiz do projeto.
 
 2.1 Limpa resultados de testes anteriores
 rm -rf performance-tests/resultado.jtl performance-tests/relatorio-html
