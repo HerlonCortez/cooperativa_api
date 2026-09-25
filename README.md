@@ -56,6 +56,7 @@ git clone git@github.com:HerlonCortez/cooperativa_api.git
 docker-compose up -d --build
 
 A API estará disponível em http://localhost:8080.
+Swagger em: http://localhost:8080/swagger-ui/index.html
 
 Testes e Qualidade de Código
 
