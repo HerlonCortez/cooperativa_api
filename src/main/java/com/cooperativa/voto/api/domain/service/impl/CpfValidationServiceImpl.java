@@ -24,7 +24,7 @@ public class CpfValidationServiceImpl implements CpfValidationService {
             CpfValidationResponse validationResponse = userInfoClient.validarCpf(cpf);
 
             log.info("Validando se o associado pode votar");
-            if (validationResponse == null ||validationResponse.canVote()) {
+            if (validationResponse == null || !validationResponse.canVote()) {
                 throw new AssociadoNaoAutorizadoException("Associado de CPF " + cpf + " não está autorizado a votar.");
             }
         } catch (FeignException.NotFound e) {

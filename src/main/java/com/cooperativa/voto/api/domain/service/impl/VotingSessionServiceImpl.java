@@ -17,14 +17,14 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class VotingSessionServiceImpl implements VotingSessionService {
     private final VotingSessionRepository votingSessionRepository;
-    private final AgendaService agendaServiceImpl;
+    private final AgendaService agendaService;
 
     @Override
     public SessaoVotacao openSession(Long agendaId, Integer durationInMinutes){
         log.info("Iniciando a criação de uma sessão");
 
         log.info("Buscando uma pauta por id da pauta");
-        var agenda = agendaServiceImpl.getAgendaId(agendaId);
+        var agenda = agendaService.getAgendaId(agendaId);
 
         log.info("Verificando se já existe uma sessão criada");
         if (votingSessionRepository.existsByPautaId(agenda.getId())) {

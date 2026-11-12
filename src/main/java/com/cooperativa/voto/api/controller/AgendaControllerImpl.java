@@ -1,6 +1,7 @@
 package com.cooperativa.voto.api.controller;
 
 import com.cooperativa.voto.api.controller.api.AgendaController;
+import com.cooperativa.voto.api.controller.dto.AgendaResponseDTO;
 import com.cooperativa.voto.api.controller.dto.CreateAgendaRequestDTO;
 import com.cooperativa.voto.api.domain.entity.Pauta;
 import com.cooperativa.voto.api.domain.service.impl.AgendaServiceImpl;
@@ -19,13 +20,13 @@ public class AgendaControllerImpl implements AgendaController {
     private final AgendaServiceImpl agendaServiceImpl;
 
     @Override
-    public ResponseEntity<Pauta> createAgenda(@RequestBody @Valid CreateAgendaRequestDTO request) {
+    public ResponseEntity<AgendaResponseDTO> createAgenda(@RequestBody @Valid CreateAgendaRequestDTO request) {
         var pauta = agendaServiceImpl.createAgenda(request.title(), request.description());
-        return ResponseEntity.status(HttpStatus.CREATED).body(pauta);
+        return ResponseEntity.status(HttpStatus.CREATED).body(AgendaResponseDTO.fromDomain(pauta));
     }
 
     @Override
-    public ResponseEntity<Pauta> getAgendaId(@PathVariable Long id) {
-        return ResponseEntity.ok(agendaServiceImpl.getAgendaId(id));
+    public ResponseEntity<AgendaResponseDTO> getAgendaId(@PathVariable Long id) {
+        return ResponseEntity.ok(AgendaResponseDTO.fromDomain(agendaServiceImpl.getAgendaId(id)));
     }
 }
