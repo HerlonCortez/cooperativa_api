@@ -9,8 +9,10 @@ import com.cooperativa.voto.api.domain.service.VotingSessionService;
 import com.cooperativa.voto.api.infrastructure.enums.OptionVoteEnum;
 import com.cooperativa.voto.api.infrastructure.repository.VoteRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -21,7 +23,8 @@ public class VoteServiceImpl implements VoteService {
     private final CpfValidationService cpfValidationService;
 
     @Override
-    public void castVote(Long agendaId, String cpf, OptionVoteEnum option){
+    @Transactional
+    public synchronized void castVote(Long agendaId, String cpf, OptionVoteEnum option){
         log.info("Iniciando o registro do voto de um associado");
 
         log.info("Buscando uma sessão por id da pauta");

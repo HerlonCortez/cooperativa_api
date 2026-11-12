@@ -1,7 +1,7 @@
 package com.cooperativa.voto.api.controller.api;
 
+import com.cooperativa.voto.api.controller.dto.AgendaResponseDTO;
 import com.cooperativa.voto.api.controller.dto.CreateAgendaRequestDTO;
-import com.cooperativa.voto.api.domain.entity.Pauta;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -14,9 +14,9 @@ public interface AgendaController {
 
     @PostMapping
     @Operation(summary = "Registra a criação de uma pauta.")
-    ResponseEntity<Pauta> createAgenda(@RequestBody @Valid CreateAgendaRequestDTO request);
+    ResponseEntity<AgendaResponseDTO> createAgenda(@RequestBody @Valid CreateAgendaRequestDTO request);
 
     @GetMapping("/{id}")
     @Operation(summary = "Busca uma pauta por id.")
-    ResponseEntity<Pauta> getAgendaId(@PathVariable Long id);
+    ResponseEntity<AgendaResponseDTO> getAgendaId(@PathVariable Long id);
 }

@@ -2,6 +2,7 @@ package com.cooperativa.voto.api.domain.service;
 
 import com.cooperativa.voto.api.domain.dto.ResultVotingDTO;
 import com.cooperativa.voto.api.infrastructure.enums.OptionVoteEnum;
+import lombok.Synchronized;
 
 public interface VoteService {
     void castVote(Long agendaId, String cpf, OptionVoteEnum option);
