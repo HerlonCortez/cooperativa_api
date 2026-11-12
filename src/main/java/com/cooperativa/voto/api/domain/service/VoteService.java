@@ -5,6 +5,6 @@ import com.cooperativa.voto.api.infrastructure.enums.OptionVoteEnum;
 import lombok.Synchronized;
 
 public interface VoteService {
-    synchronized void castVote(Long agendaId, String cpf, OptionVoteEnum option);
+    void castVote(Long agendaId, String cpf, OptionVoteEnum option);
     ResultVotingDTO countVotes(Long pautaId);
 }
