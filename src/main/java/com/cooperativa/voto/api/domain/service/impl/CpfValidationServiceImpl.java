@@ -7,6 +7,7 @@ import com.cooperativa.voto.api.infrastructure.client.dto.CpfValidationResponse;
 import com.cooperativa.voto.api.infrastructure.client.exception.AssociadoNaoAutorizadoException;
 import com.cooperativa.voto.api.infrastructure.client.exception.CpfInvalidoException;
 import feign.FeignException;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,22 +16,35 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class CpfValidationServiceImpl implements CpfValidationService {
+
     private final UserInfoClient userInfoClient;
 
     @Override
+    @CircuitBreaker(
+            name = "cpfValidation",
+            fallbackMethod = "fallback"
+    )
     public void validateMemberIsEligibleToVote(String cpf) {
-        try {
-            log.info("Iniciando a validação do CPF para um associado");
-            CpfValidationResponse validationResponse = userInfoClient.validarCpf(cpf);
 
-            log.info("Validando se o associado pode votar");
-            if (validationResponse == null || !validationResponse.canVote()) {
-                throw new AssociadoNaoAutorizadoException("Associado de CPF " + cpf + " não está autorizado a votar.");
-            }
-        } catch (FeignException.NotFound e) {
-            throw new CpfInvalidoException("CPF informado é inválido: " + cpf);
-        } catch (FeignException e) {
-            throw new RuntimeException("Erro ao comunicar com o serviço externo de validação de CPF.", e);
+        log.info("Iniciando a validação do CPF para um associado");
+
+        CpfValidationResponse validationResponse =
+                userInfoClient.validarCpf(cpf);
+
+        log.info("Validando se o associado pode votar");
+
+        if (validationResponse == null || !validationResponse.canVote()) {
+            throw new AssociadoNaoAutorizadoException(
+                    "Associado de CPF " + cpf + " não está autorizado a votar."
+            );
         }
+    }
+
+    public void fallback(String cpf, Throwable ex) {
+        log.error("Serviço externo de validação indisponível", ex);
+
+        throw new RuntimeException(
+                "Serviço de validação de CPF temporariamente indisponível."
+        );
     }
 }
