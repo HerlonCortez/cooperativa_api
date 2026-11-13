@@ -60,7 +60,7 @@ public class VotingUIControllerImpl implements VotingUIController {
 
     @Override
     public ResponseEntity<ScreenSelectionResponse> getScreenSelecion(@RequestBody @Valid NextSelectionRequestDTO request) {
-//        cpfValidationService.validateMemberIsEligibleToVote(request.getCpf());
+        cpfValidationService.validateMemberIsEligibleToVote(request.getCpf());
         var agenda = agendaService.getAgendaId(request.agendaId());
         String urlRecordVote = baseUrl + "/v1/votos";
 

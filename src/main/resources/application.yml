@@ -34,3 +34,14 @@ springdoc:
     doc-expansion: none
   packages-to-scan: com.cooperativa.voto.api.controller
   paths-to-match: /v1/**
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      cpfValidation:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 30s
+        permittedNumberOfCallsInHalfOpenState: 3
