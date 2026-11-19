@@ -41,7 +41,7 @@ Gerenciamento de dependências
 
 A aplicação utiliza uma arquitetura em camadas, com separação de responsabilidades.
 
-![Arquitetura atual](diagrama%20de%20arquitetura.png)
+![Arquitetura atual](diagrama-arquitetura.png)
 
 ## 3.1. Camada Controller
 
