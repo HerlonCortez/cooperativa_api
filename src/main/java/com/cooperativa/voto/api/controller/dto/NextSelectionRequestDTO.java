@@ -1,6 +1,5 @@
 package com.cooperativa.voto.api.controller.dto;
 
-import com.cooperativa.voto.api.infrastructure.enums.OptionVoteEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
