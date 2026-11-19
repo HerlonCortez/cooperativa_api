@@ -37,13 +37,44 @@ Mecanismos de tolerância a falhas
 Maven
 Gerenciamento de dependências
 
-## 3. Arquitetura Atual
+## 3. Requisitos funcionais
+Considerando o funcionamento que já identificamos:
+ID	Requisito
+RF01	Cadastrar e consultar pautas.
+RF02	Criar sessões de votação.
+RF03	Abrir e encerrar sessões.
+RF04	Validar o CPF do associado.
+RF05	Permitir votação nas sessões abertas.
+RF06	Registrar o voto do associado.
+RF07	Impedir votos duplicados na mesma pauta.
+RF08	Consultar resultados da votação.
+
+Uma regra de negócio especialmente importante que você já implementou é:
+
+Um associado pode registrar somente um voto por pauta.
+
+No seu método castVote(Long agendaId, String cpf, OptionVoteEnum option), você já trabalha com as seguintes verificações:
+1. Localizar a pauta/sessão.
+2. Verificar se a sessão está aberta.
+3. Identificar o associado pelo CPF.
+4. Verificar se já existe voto para aquela combinação de pauta e associado.
+5. Registrar o voto.
+2. Requisitos não funcionais
+Aqui estão os requisitos que eu colocaria como objetivos arquiteturais. Alguns ainda precisam ser confirmados como requisitos formais do seu projeto.
+- Consistência: não permitir votos duplicados.
+- Disponibilidade: manter o sistema operacional durante as sessões.
+- Desempenho: suportar acessos concorrentes durante períodos de votação.
+- Segurança: proteger os dados dos associados e a integridade dos votos.
+- Resiliência: suportar indisponibilidade temporária de serviços externos.
+- Auditabilidade: permitir rastrear operações administrativas e eventos relevantes.
+
+## 4. Arquitetura Atual
 
 A aplicação utiliza uma arquitetura em camadas, com separação de responsabilidades.
 
 ![Arquitetura atual](diagramas/diagrama-arquitetura.png)
 
-## 3.1. Camada Controller
+## 4.1. Camada Controller
 
 Responsável por disponibilizar os endpoints REST e tratar a comunicação HTTP.
 
@@ -55,7 +86,7 @@ DTOs de requisição e resposta HTTP.
 
 As interfaces definem os contratos da API, enquanto suas implementações recebem as requisições e delegam as operações aos serviços do domínio.
 
-## 3.2. Camada Domain (Domínio)
+## 4.2. Camada Domain (Domínio)
 
 Contém os conceitos de negócio e as operações relacionadas às regras do sistema.
 
@@ -69,7 +100,7 @@ Implementações dos serviços.
 
 As interfaces dos serviços definem as operações disponíveis, enquanto suas implementações coordenam as regras de negócio e acessam as dependências necessárias.
 
-## 3.3. Camada Infrastructure (Infraestrutura)
+## 4.3. Camada Infrastructure (Infraestrutura)
 
 Responsável pelas integrações técnicas e pelos mecanismos de persistência.
 
@@ -84,7 +115,7 @@ O Spring Data JPA fornece abstrações de repositório para acesso ao banco de d
 
 Os clientes externos são responsáveis pela comunicação com outros serviços.
 
-4. Estrutura Atual de Pacotes
+## 5. Estrutura Atual de Pacotes
 
 ```text
 com.cooperativa.voto.api
@@ -120,7 +151,7 @@ com.cooperativa.voto.api
 │
 └── Application
 ```
-## 5. Fluxo de votação
+## 6. Fluxo de votação
 
 ![Fluxo de votação](diagramas/diagrama-sequencia.png)
 
