@@ -120,3 +120,6 @@ com.cooperativa.voto.api
 │
 └── Application
 ```
+## 5. Fluxo de votação
+
+![Fluxo de votação](diagramas/diagrama-sequencia.png)
