@@ -37,10 +37,13 @@ Mecanismos de tolerância a falhas
 Maven
 Gerenciamento de dependências
 
-## 3. Requisitos funcionais
+## 3. Requisitos
+
+## 3.1. Requisitos funcionais
+
 Considerando o funcionamento que já identificamos:
 ID	Requisito
-RF01	Cadastrar e consultar pautas.
+RF01	Cadastrar e consultar pautas. 
 RF02	Criar sessões de votação.
 RF03	Abrir e encerrar sessões.
 RF04	Validar o CPF do associado.
@@ -54,13 +57,17 @@ Uma regra de negócio especialmente importante que você já implementou é:
 Um associado pode registrar somente um voto por pauta.
 
 No seu método castVote(Long agendaId, String cpf, OptionVoteEnum option), você já trabalha com as seguintes verificações:
+
 1. Localizar a pauta/sessão.
 2. Verificar se a sessão está aberta.
 3. Identificar o associado pelo CPF.
 4. Verificar se já existe voto para aquela combinação de pauta e associado.
 5. Registrar o voto.
-2. Requisitos não funcionais
+
+## 3.2. Requisitos não funcionais
+
 Aqui estão os requisitos que eu colocaria como objetivos arquiteturais. Alguns ainda precisam ser confirmados como requisitos formais do seu projeto.
+
 - Consistência: não permitir votos duplicados.
 - Disponibilidade: manter o sistema operacional durante as sessões.
 - Desempenho: suportar acessos concorrentes durante períodos de votação.
