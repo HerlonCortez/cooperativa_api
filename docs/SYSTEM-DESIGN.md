@@ -1,6 +1,6 @@
-#Sistema de Votação da Cooperativa — System Design
+# Sistema de Votação da Cooperativa — System Design
 
-##1. Visão Geral do Projeto
+## 1. Visão Geral do Projeto
 
 O Sistema de Votação da Cooperativa é uma aplicação backend desenvolvida para gerenciar processos de votação de cooperativas.
 O sistema disponibiliza funcionalidades para gerenciamento de pautas, controle de sessões de votação, validação de associados e registro de votos.
@@ -16,7 +16,7 @@ Impedir votos duplicados.
 Permitir a consulta dos resultados das votações.
 Garantir a consistência dos dados e a aplicação das regras de negócio.
 
-##2. Tecnologias Utilizadas
+## 2. Tecnologias Utilizadas
 
 Tecnologia
 Responsabilidade
@@ -37,11 +37,11 @@ Mecanismos de tolerância a falhas
 Maven
 Gerenciamento de dependências
 
-#3. Arquitetura Atual
+## 3. Arquitetura Atual
 
-#A aplicação utiliza uma arquitetura em camadas, com separação de responsabilidades.
+A aplicação utiliza uma arquitetura em camadas, com separação de responsabilidades.
 
-##3.1. Camada Controller
+## 3.1. Camada Controller
 
 Responsável por disponibilizar os endpoints REST e tratar a comunicação HTTP.
 
@@ -53,7 +53,7 @@ DTOs de requisição e resposta HTTP.
 
 As interfaces definem os contratos da API, enquanto suas implementações recebem as requisições e delegam as operações aos serviços do domínio.
 
-##3.2. Camada Domain (Domínio)
+## 3.2. Camada Domain (Domínio)
 
 Contém os conceitos de negócio e as operações relacionadas às regras do sistema.
 
@@ -67,7 +67,7 @@ Implementações dos serviços.
 
 As interfaces dos serviços definem as operações disponíveis, enquanto suas implementações coordenam as regras de negócio e acessam as dependências necessárias.
 
-##3.3. Camada Infrastructure (Infraestrutura)
+## 3.3. Camada Infrastructure (Infraestrutura)
 
 Responsável pelas integrações técnicas e pelos mecanismos de persistência.
 
