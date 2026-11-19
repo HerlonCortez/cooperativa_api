@@ -86,6 +86,7 @@ Os clientes externos são responsáveis pela comunicação com outros serviços.
 
 4. Estrutura Atual de Pacotes
 
+```text
 com.cooperativa.voto.api
 │
 ├── controller
@@ -107,14 +108,15 @@ com.cooperativa.voto.api
 │   ├── entity
 │   ├── exception
 │   └── service
-│       ├── interfaces dos serviços
-│       └── implementações dos serviços
+│       ├── Interfaces dos serviços
+│       └── Implementações dos serviços
 │
 ├── infrastructure
 │   ├── client
 │   ├── enums
 │   ├── exception
 │   └── repository
-│       └── repositórios Spring Data JPA
+│       └── Repositórios Spring Data JPA
 │
 └── Application
+```
