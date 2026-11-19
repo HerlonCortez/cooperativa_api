@@ -42,15 +42,17 @@ Gerenciamento de dependências
 ## 3.1. Requisitos funcionais
 
 Considerando o funcionamento que já identificamos:
-ID	Requisito
-RF01	Cadastrar e consultar pautas. 
-RF02	Criar sessões de votação.
-RF03	Abrir e encerrar sessões.
-RF04	Validar o CPF do associado.
-RF05	Permitir votação nas sessões abertas.
-RF06	Registrar o voto do associado.
-RF07	Impedir votos duplicados na mesma pauta.
-RF08	Consultar resultados da votação.
+
+| ID | Requisito Funcional |
+|---|---|
+| RF01 | Cadastrar e consultar pautas. |
+| RF02 | Criar sessões de votação. |
+| RF03 | Abrir e encerrar sessões. |
+| RF04 | Validar o CPF do associado. |
+| RF05 | Permitir votação nas sessões abertas. |
+| RF06 | Registrar o voto do associado. |
+| RF07 | Impedir votos duplicados na mesma pauta. |
+| RF08 | Consultar resultados da votação. |
 
 Uma regra de negócio especialmente importante que você já implementou é:
 
