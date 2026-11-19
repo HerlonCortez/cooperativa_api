@@ -41,6 +41,8 @@ Gerenciamento de dependências
 
 A aplicação utiliza uma arquitetura em camadas, com separação de responsabilidades.
 
+![Arquitetura atual](diagramas/diagrama de arquitetura.png)
+
 ## 3.1. Camada Controller
 
 Responsável por disponibilizar os endpoints REST e tratar a comunicação HTTP.
