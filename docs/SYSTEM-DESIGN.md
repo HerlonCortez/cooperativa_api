@@ -123,3 +123,15 @@ com.cooperativa.voto.api
 ## 5. Fluxo de votação
 
 ![Fluxo de votação](diagramas/diagrama-sequencia.png)
+
+O diagrama de sequência acima apresenta o fluxo de execução de uma operação de votação, detalhando a comunicação entre os principais componentes do sistema: associado, controller, serviço de domínio, cliente de integração externa, repositório e banco de dados.
+
+O fluxo começa quando o associado solicita o registro de seu voto por meio da API. O controller recebe a requisição, realiza o tratamento dos dados de entrada e encaminha a operação ao serviço responsável pelas regras de negócio.
+
+O serviço coordena o processo de votação, realizando as validações necessárias, incluindo a verificação da situação do associado por meio de uma integração externa, a confirmação da existência e validade da sessão de votação e a verificação de possíveis registros anteriores para evitar votos duplicados.
+
+Após a conclusão das validações, o serviço solicita ao repositório a persistência do voto. O repositório, utilizando Spring Data JPA, realiza a comunicação com o banco de dados e retorna o resultado da operação.
+
+Por fim, o serviço devolve o resultado ao controller, que constrói e retorna a resposta HTTP ao associado.
+
+Dessa forma, o diagrama evidencia a sequência de interações, a distribuição de responsabilidades entre os componentes e o papel de cada camada na execução do processo de votação, contribuindo para a compreensão do fluxo de negócio e dos mecanismos de integração e persistência da aplicação.
